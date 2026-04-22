@@ -22,7 +22,9 @@ const importJsonInput = document.getElementById("import-json-input");
 const todayButton = document.getElementById("today-btn");
 const autosaveIndicator = document.getElementById("autosave-indicator");
 
-let state = hydrateState(loadState());
+const initialStoredState = loadState();
+const hadLocalSnapshotOnBoot = initialStoredState !== null;
+let state = hydrateState(initialStoredState);
 let activeView = "dashboard";
 let selectedEntryId = state.entries[0]?.id ?? null;
 let searchTerm = "";
@@ -1251,10 +1253,13 @@ async function initFirebaseSync() {
     const firstSnapshot = await cloudSync.ref.once("value");
     const firstPayload = readCloudPayload(firstSnapshot);
     const localUpdatedAt = getStateUpdatedAt();
+    const shouldPreferRemoteOnBoot = !hadLocalSnapshotOnBoot;
 
     if (!firstPayload) {
       await cloudSync.ref.set(buildCloudPayload(state));
       cloudSync.lastRemoteUpdatedAt = localUpdatedAt;
+    } else if (shouldPreferRemoteOnBoot) {
+      await applyRemoteState(firstPayload.state, firstPayload.updatedAt);
     } else if (firstPayload.updatedAt > localUpdatedAt) {
       await applyRemoteState(firstPayload.state, firstPayload.updatedAt);
     } else if (firstPayload.updatedAt < localUpdatedAt) {
