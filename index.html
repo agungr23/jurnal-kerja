@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Work Journal | Jurnal Kerja Pribadi</title>
+    <meta
+      name="description"
+      content="Jurnal kerja pribadi untuk mencatat fokus, task, refleksi, dan log mingguan."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg-glow bg-glow-one" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-two" aria-hidden="true"></div>
+
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <p class="brand-kicker">Personal Workspace</p>
+          <h1 class="brand-title">Work Journal</h1>
+          <p class="brand-subtitle">Deep Work Session</p>
+        </div>
+
+        <button id="new-entry-btn" class="btn btn-primary">
+          + New Entry
+        </button>
+
+        <nav class="nav-menu" aria-label="Menu utama">
+          <button class="nav-item is-active" data-view="dashboard">
+            Dashboard
+          </button>
+          <button class="nav-item" data-view="tasks">Tasks</button>
+          <button class="nav-item" data-view="reflections">Reflections</button>
+          <button class="nav-item" data-view="calendar">Calendar</button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="sidebar-tools">
+            <button class="btn btn-secondary" id="export-json-btn" type="button">
+              Export JSON
+            </button>
+            <button class="btn btn-secondary" id="import-json-btn" type="button">
+              Import JSON
+            </button>
+          </div>
+          <button class="btn btn-ghost" id="reset-demo-btn" type="button">
+            Reset Sample Data
+          </button>
+          <input
+            id="import-json-input"
+            type="file"
+            accept="application/json,.json"
+            hidden
+          />
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <label class="search-wrap">
+            <span class="sr-only">Search</span>
+            <input
+              id="search-input"
+              type="search"
+              placeholder="Search entries, tasks, notes..."
+              autocomplete="off"
+            />
+          </label>
+          <div class="topbar-actions">
+            <button id="today-btn" class="btn btn-secondary" type="button">
+              Today
+            </button>
+            <span class="autosave-indicator" id="autosave-indicator">
+              Ready
+            </span>
+          </div>
+        </header>
+
+        <section id="view-dashboard" class="view is-active"></section>
+        <section id="view-tasks" class="view"></section>
+        <section id="view-reflections" class="view"></section>
+        <section id="view-calendar" class="view"></section>
+      </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+    <script src="./firebase-config.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
